@@ -1,0 +1,5 @@
+vivek@vivek-ThinkPad-T490:~/Documents/Subjects/273-Enterprise Distributed System/Fall21/cmpe273-submission/lab1$ time python3 ext_merge_sort.py
+
+real    0m0.072s
+user    0m0.029s
+sys     0m0.026s
