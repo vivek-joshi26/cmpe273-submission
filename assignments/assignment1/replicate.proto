@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package replicate;
+// Testing the client streaming is working as expected or not
+
+// This is the RPC service used to stream data from client to Server
+service ReplicatePostgresToMongodb{
+  rpc StreamToServer(Message) returns (Response) {}
+}
+
+// This is the definition of the message that will be streamed to the client
+message Message{
+  string message = 1;
+}
+
+// This is the response that will be send by the Server to the client
+message Response {
+  string messageResponse = 1;
+  bool completed = 2;
+}
+
+// Use below command to generate the boiler code
+// python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. replicate.proto
+// python -m grpc_tools.protoc -I. --proto_path=assignments/assignment1  --python_out=. --grpc_python_out=. replicate.proto

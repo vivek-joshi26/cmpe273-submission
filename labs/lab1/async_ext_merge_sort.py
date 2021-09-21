@@ -1,44 +1,54 @@
 import heapq
 import os
+import asyncio
+from socket import socket
 
 
 input_path = "input/"
-output_file_path = "../output/sorted_files/sorted"
+output_file_path = "../output/async_sorted_files/async_sorted"
 open_files_dict = {}
 os.chdir(input_path)
+tasks = []
 
-
+# Create separate tasks for sorting individual files, because those can be sorted simultaneously
 def sort():
-    read_text_file()
+    loop = asyncio.get_event_loop()
+
+    for file_path in os.listdir():
+        current_file = open(file_path, "r")
+        tasks.append(asyncio.Task(read_text_file(current_file, file_path)))
+
+    loop.run_until_complete(asyncio.wait(tasks))
+    loop.close()
+
     write_output()
 
 
 # Read and sort each individual file
-def read_text_file():
-    for file_path in os.listdir():
-        current_file = open(file_path, "r")
-        column = []
-        for line in current_file:
-            column.append(int(line.split("\n")[0]))
+async def read_text_file(current_file,file_path):
+    column = []
+    for line in current_file:
+        column.append(int(line.split("\n")[0]))
 
-        column.sort()
-        output_file = output_file_path + "_" + file_path.split("_")[1]
-        new_file = open(output_file, "a")
-        new_file.writelines(map("{}\n".format, column))
-        new_file.close()
-        current_file.close()
+    column.sort()
+    output_file = output_file_path + "_" + file_path.split("_")[1]
+    new_file = open(output_file, "a")
+    new_file.writelines(map("{}\n".format, column))
+    new_file.close()
+    current_file.close()
 
 
-# Create a min heap to read data from all the files, then remove the min value, and add the second element from the file whose element is removed, implemented k-way sort using min heap
+
+
 def write_output():
     os.chdir("../output/")
-    output_file = "sorted.txt"
+    output_file = "async_sorted.txt"
 
     sorted_file = open(output_file, 'w+')
 
     min_heap = []
     heapq.heapify(min_heap)
-    os.chdir("sorted_files/")
+    os.chdir("async_sorted_files/")
 
     for file in os.listdir():
         if os.path.isfile(file):
@@ -63,7 +73,3 @@ def write_output():
 
 
 sort()
-
-
-
-
