@@ -1,0 +1,12 @@
+flask
+
+If we want to use https then we need to provide certificate and key details, run below commands on terminal, then certificates will be generated, place them in the ServerKeys folder-
+    1- Generate a private key- openssl genrsa -des3 -out server.key 1024        #{Passphrase for server key- 1234}
+    2- Generate a CSR- openssl req -new -key server.key -out server.csr          #{Passphrase- 1234,Country Name (2 letter code) [AU]:US
+    3- Remove Passphrase from key-
+        cp server.key server.key.org
+        openssl rsa -in server.key.org -out server.key          #passphrase- 1234
+    4- Generate self signed certificate- openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
+    But self signed certificate is not working using the curl command
+
+If we don't want to use https then uncomment #app.run(debug=False,host='localhost', port= 8070) and comment all the lines after that

@@ -1,9 +1,12 @@
 from pymongo import MongoClient
 import json
+import databaseconfig as cfg
 
-client = MongoClient('mongodb+srv://mongo:HxCOxXZkxYCU8LXw@cluster0.3tccv.mongodb.net/college?ssl=true&ssl_cert_reqs=CERT_NONE')
-db = client.college
-students = db.students
+
+url = f'{cfg.mongoDB["urlBegin"]}://{cfg.mongoDB["user"]}:{cfg.mongoDB["passwd"]}@{cfg.mongoDB["host"]}/{cfg.mongoDB["db"]}{cfg.mongoDB["urlEnd"]}'
+client = MongoClient(url)
+db = client.cfg.mongoDB["db"]
+students = db.cfg.mongoDB["collection"]
 
 '''
 cursor = students.find()

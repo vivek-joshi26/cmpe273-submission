@@ -7,6 +7,7 @@ import psycopg2
 import psycopg2.extras
 from grpc_requests import StubClient
 from assignments.assignment1.replicate_pb2 import DESCRIPTOR
+from assignments.assignment1 import databaseconfig as cfg
 
 class Client_ReplicatePostgres(object):
     def __init__(self):
@@ -26,10 +27,18 @@ class Client_ReplicatePostgres(object):
 
 if __name__ == '__main__':
     client = Client_ReplicatePostgres()
+    '''
     connection = psycopg2.connect(
         f'postgresql://postgres:password@localhost/college',
         connection_factory=psycopg2.extras.LogicalReplicationConnection
+    )   '''
+    # PostGRE DB url getting values from databaseconfig file
+    url = f'{cfg.postGRE["urlBegin"]}://{cfg.postGRE["user"]}:{cfg.postGRE["passwd"]}@{cfg.postGRE["host"]}/{cfg.postGRE["db"]}'
+    connection = psycopg2.connect(
+        url,
+        connection_factory=psycopg2.extras.LogicalReplicationConnection
     )
+
     cursor = connection.cursor()
     replication_slot_name = 'testing'
     try:

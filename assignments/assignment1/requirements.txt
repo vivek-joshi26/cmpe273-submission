@@ -1,2 +1,9 @@
+PACKAGES REQUIRED--
 psycopg2
+grpc_requests
 grpc
+sys
+futures
+
+CONFIGURATION--
+databaseconfig.py file is used to maintain postGRE and MongoDB credentials, please update according to your needs
