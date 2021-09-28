@@ -1,5 +1,6 @@
 PACKAGES REQUIRED--
 psycopg2
+psycopg2.extras
 grpc_requests
 grpc
 sys
