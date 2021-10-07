@@ -1,0 +1,67 @@
+ariadne.constants
+ariadne
+flask
+
+
+Sample Queries to run on the Server-  First go to the URL  /graphql
+
+
+1- Mutation for creating a new student
+mutation newStudent {
+  insertStudent(name: "Vivek") {
+    id
+    name
+  }
+}
+
+
+
+2- Mutation for creating a new class
+mutation newClass {
+  createClass(name: "CMPE-273") {
+    id
+    name
+    students{
+      id
+      name
+    }
+  }
+}
+
+
+
+3- Mutation for adding students to the class
+mutation newStudentToClass {
+  addStudentToClass(id: 1,class_id: 101) {
+    id
+    name
+    students{
+      id
+      name
+    }
+
+  }
+}
+
+
+4- Query for viewing student
+
+{
+  findStudent(id:1) {
+    name
+  }
+}
+
+
+
+5- Query for viewing class and students added to that class
+{
+  viewClass(id:101){
+    id
+    name
+    students{
+      id
+    name
+    }
+  }
+}

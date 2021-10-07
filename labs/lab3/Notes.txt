@@ -1,0 +1,62 @@
+Reference URL- https://www.twilio.com/blog/graphql-api-python-flask-ariadne
+
+Query for viewing student
+
+{
+  findStudent(id:1238125) {
+    name
+  }
+}
+
+Query for viewing class and students added to that class
+{
+  viewClass(id:101){
+    id
+    name
+    students{
+      id
+    name
+    }
+  }
+}
+
+
+
+How to create a new student
+
+mutation newStudent {
+  insertStudent(name: "Vivek") {
+    id
+    name
+  }
+}
+
+
+
+How to create a new Class
+
+mutation newClass {
+  createClass(name: "CMPE-275") {
+    id
+    name
+    students{
+      id
+      name
+    }
+  }
+}
+
+
+How to addstudents to a class
+
+mutation newStudentToClass {
+  addStudentToClass(id: 1,class_id: 101) {
+    id
+    name
+    students{
+      id
+      name
+    }
+
+  }
+}
