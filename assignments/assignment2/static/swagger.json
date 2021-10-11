@@ -1,0 +1,324 @@
+{
+  "openapi" : "3.0.3",
+  "info" : {
+    "description": "Clone of Bitly API",
+    "version": "1.0.0",
+    "title": "BITLY API"
+
+  },
+
+  "components": {
+      "schemas": {
+          "RequestBodyShorten":{
+            "type" : "object",
+            "properties": {
+              "long_url" : {
+                "type" : "string",
+                "required": true,
+                "example" : "www.longurl.com/sadsaa"
+              },
+              "domain": {
+                "type" : "string",
+                "default" : "bit.ly",
+                "example" : "bit.ly"
+              },
+              "group_guid": {
+                "type" : "string",
+                "example" : "Ba1bc23dE4F"
+              }
+            }
+          },
+        "DeepLinks": {
+          "type": "object",
+          "properties": {
+            "app_id": {
+                "type" : "string",
+                "example" : "com.bitly.com"
+              },
+            "app_uri_path": {
+                "type" : "string",
+                "example" : "/store?id=123456"
+              },
+            "install_url": {
+                "type" : "string",
+                "example" : "https://play.google.com/store/apps/details?id=com.bitly.app&hl=en_US"
+              },
+            "install_type" : {
+                "type" : "string",
+                "example" : "promote_install"
+              }
+          }
+
+        }
+        ,
+        "DeepLinksUpdate": {
+          "type": "object",
+          "properties": {
+            "guid": {
+                "type" : "string",
+                "example" : "Ra1bcD2eF3h"
+              },
+            "bitlink": {
+                "type" : "string",
+                "example" : "bit.ly/b"
+              },
+            "app_uri_path": {
+                "type" : "string",
+                "example" : "/store?id=123456"
+              },
+            "install_url": {
+                "type" : "string",
+                "example" : "https://play.google.com/store/apps/details?id=com.bitly.app&hl=en_US"
+              },
+             "app_guid": {
+                "type" : "string",
+                "example" : "Ab1cdE2fG3h"
+              },
+             "os": {
+                "type" : "string",
+                "example" : "android"
+              },
+            "install_type" : {
+                "type" : "string",
+                "example" : "promote_install"
+              },
+            "brand_guid" : {
+                "type" : "string",
+                "example" : "Ba1bc23dE4F"
+              }
+          }
+
+        }
+        ,
+        "RequestBodyCreate":{
+            "type" : "object",
+            "properties": {
+              "long_url" : {
+                "type" : "string",
+                "required": true,
+                "example" : "www.longurl.com/sadsaa"
+              },
+              "domain": {
+                "type" : "string",
+                "default" : "bit.ly",
+                "example" : "bit.ly"
+              },
+              "group_guid": {
+                "type" : "string",
+                "description": "Always include a specific group and custom domain in your shorten calls",
+                "example" : "Ba1bc23dE4F"
+              },
+              "title" : {
+                "type" : "string",
+                "example" : "Bitly API Clone"
+              },
+              "tags": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "example" : ["example1", "example2"]
+              },
+              "deeplinks": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/DeepLinks"
+                }
+              }
+            }
+          },
+          "RequestBodyUpdate":{
+            "type" : "object",
+            "properties": {
+              "link"  : {
+                "type" : "string",
+                "example" : "bit.ly/b"
+              },
+              "id"  : {
+                "type" : "string",
+                "example" : "bit.ly/b"
+              },
+              "long_url" : {
+                "type" : "string",
+                "required": true,
+                "example" : "www.longurl.com/sadsaa"
+              },
+              "title" : {
+                "type" : "string",
+                "example" : "Bitly API Clone Updated"
+              },
+              "archived": {
+                "type" : "boolean",
+                "example" : true
+              },
+              "created_by" : {
+                "type" : "string",
+                "example" : "chauncey"
+              },
+             "custom_bitlinks": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "example" : ["https://chauncey.ly/documentation"]
+              },
+              "tags": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "example" : ["example1", "example2"]
+              },
+              "deeplinks": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/DeepLinksUpdate"
+                }
+              }
+            }
+          }
+      }
+  },
+  "paths": {
+
+    "/v4/bitlinks" :  {
+      "post": {
+        "tags": [
+          "Create a Bitlink"
+        ],
+        "summary": "Converts a long url to a Bitlink and sets additional parameters",
+        "requestBody": {
+          "summary": "Post a link",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestBodyCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200" : {
+            "description": "SUCCESS"
+          }
+        }
+      }
+    },
+    "/v4/bitlinks/{bitlink_update}" :  {
+      "patch": {
+        "tags": [
+          "Update a Bitlink"
+        ],
+        "summary": "Updates fields in the specified link",
+        "parameters": [{
+            "name": "bitlink_update",
+            "in" : "path",
+            "description": "Bitly link",
+            "required": true,
+            "type": "string",
+            "schema": {
+              "example": "bit.ly/b"
+            }
+          }],
+        "requestBody": {
+          "summary": "Update a link",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestBodyUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200" : {
+            "description": "SUCCESS"
+          }
+        }
+      }
+    },
+    "/v4/bitlinks/{bitlink_get}": {
+        "get" : {
+            "tags": [
+              "Get bitlink details from API"
+            ],
+          "summary": "Get details",
+          "parameters": [{
+            "name": "bitlink_get",
+            "in" : "path",
+            "description": "Bitly link",
+            "required": true,
+            "type": "string",
+            "schema": {
+              "example": "bit.ly/b"
+            }
+          }],
+          "responses": {
+            "200": {
+              "description": "SUCCESS"
+            }
+          }
+        }
+    },
+    "/v4/bitlinks/{bitlink}/clicks" : {
+       "get" : {
+            "tags": [
+              "Get Clicks for a Bitlink"
+            ],
+          "summary": "Returns the click counts for the specified link",
+          "parameters": [{
+            "name": "bitlink",
+            "in" : "path",
+            "description": "Bitly link",
+            "required": true,
+            "type": "string",
+            "schema": {
+              "example": "bit.ly/b"
+            }
+          },
+          {
+            "name": "dateCreated",
+            "in" : "query",
+            "description": "pass 1 if you want to get the date of creation else 0",
+            "required": true,
+            "type": "integer",
+            "schema": {
+              "example": 1
+            }
+          }],
+          "responses": {
+            "200": {
+              "description": "SUCCESS"
+            }
+          }
+        }
+    },
+     "/v4/shorten" :  {
+      "post": {
+        "tags": [
+          "Converts a long url to a Bitlink, without persisting it"
+        ],
+        "summary": "Shorten a Link",
+        "requestBody": {
+          "summary": "Post a link",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestBodyShorten"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200" : {
+            "description": "SUCCESS"
+          }
+        }
+      }
+    }
+  }
+
+}
