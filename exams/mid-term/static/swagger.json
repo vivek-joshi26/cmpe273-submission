@@ -1,0 +1,175 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "description": "Twitter-like REST API",
+    "version": "1.0.0",
+    "title": "TWITTER API"
+  },
+  "components": {
+    "schemas": {
+      "RequestBodyCreateUser": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "John Smith"
+          },
+          "email": {
+            "type": "email",
+            "example": "john.smith@gmail.com"
+          }
+        }
+      },
+      "RequestBodyTweet": {
+        "type": "object",
+        "properties": {
+          "tweet": {
+            "type": "string",
+            "example": "Fan art is the best"
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": [
+          "Create a User"
+        ],
+        "summary": "Creates a User",
+        "requestBody": {
+          "summary": "Post user details",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestBodyCreateUser"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "SUCCESS"
+          }
+        }
+      }
+    },
+    "/users/{user_id}/followers/{follower_id}" : {
+       "patch" : {
+            "tags": [
+              "Adds a follower to the given user"
+            ],
+          "summary": "Returns the user details",
+          "parameters": [{
+            "name": "user_id",
+            "in" : "path",
+            "description": "User id",
+            "required": true,
+            "type": "integer",
+            "schema": {
+              "example": 100
+            }
+          },
+            {
+            "name": "follower_id",
+            "in" : "path",
+            "description": "Follower id",
+            "required": true,
+            "type": "integer",
+            "schema": {
+              "example": 101
+            }
+          }],
+          "responses": {
+            "200": {
+              "description": "SUCCESS"
+            }
+          }
+        }
+    },
+
+    "/users/{user_id}/tweets" : {
+      "post": {
+        "tags": [
+          "Add a tweet for the given user"
+        ],
+        "summary": "Adds a tweet to the given user",
+        "parameters": [{
+            "name": "user_id",
+            "in" : "path",
+            "description": "Provide user_id",
+            "required": true,
+            "type": "integer",
+            "schema": {
+              "example": 100
+            }
+          }],
+        "requestBody": {
+          "summary": "Add a tweet",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestBodyTweet"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200" : {
+            "description": "SUCCESS"
+          }
+        }
+      }
+    },
+    "/users/{user_id}" : {
+      "get" : {
+            "tags": [
+              "Get User details"
+            ],
+          "summary": "Get user details",
+          "parameters": [{
+            "name": "user_id",
+            "in" : "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer",
+            "schema": {
+              "example": 100
+            }
+          }],
+          "responses": {
+            "200": {
+              "description": "SUCCESS"
+            }
+          }
+        }
+    },
+
+    "/users/{user_id}/timeline" : {
+      "get" : {
+            "tags": [
+              "Get User tweet details"
+            ],
+          "summary": "Get user tweet details",
+          "parameters": [{
+            "name": "user_id",
+            "in" : "path",
+            "description": "user id",
+            "required": true,
+            "type": "integer",
+            "schema": {
+              "example": 100
+            }
+          }],
+          "responses": {
+            "200": {
+              "description": "SUCCESS"
+            }
+          }
+        }
+    }
+  }
+}

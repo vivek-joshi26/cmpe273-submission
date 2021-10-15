@@ -1,0 +1,10 @@
+flask
+flask_swagger_ui
+
+
+How to run-
+Run the app.py file
+then go to resource
+-->     /swagger
+
+All the end points with example data is present there, you can test the application from there.
