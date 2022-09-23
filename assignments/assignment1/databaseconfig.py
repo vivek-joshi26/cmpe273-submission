@@ -8,11 +8,11 @@ postGRE = {
 mongoDB = {
     # Below one is the current url that I am using after combining these values,
     # in case you want to remove ssl and ssl_cert_reqs query params, kindly update urlEnd to empty string
-    #"url": "mongodb+srv://mongo:HxCOxXZkxYCU8LXw@cluster0.3tccv.mongodb.net/college?ssl=true&ssl_cert_reqs=CERT_NONE",
+    #"url": "",
     "urlBegin": "mongodb+srv",                  #provide the intial url for mongodb, for atlas service I am using mongodb+srv
     "host": "cluster0.3tccv.mongodb.net",       #provide the mongodb  host name, I am using atlas service, so this is the cluster name
-    "user": "mongo",                            #provide the mongodb user name
-    "passwd": "HxCOxXZkxYCU8LXw",               #provide the mongodb password
+    "user": "",                            #provide the mongodb user name
+    "passwd": "",               #provide the mongodb password
     "db": "college",                            #provide the mongodb db name
     "collection" : "students",                  #provide the collection name
     "urlEnd" : "?ssl=true&ssl_cert_reqs=CERT_NONE",
